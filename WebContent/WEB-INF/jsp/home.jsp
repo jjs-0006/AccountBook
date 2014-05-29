@@ -13,6 +13,7 @@
 
         <div id="chart"></div>
 
+        <script type="text/javascript" src="js/underscore-min.js"></script>
         <script type="text/javascript" src="js/d3.js"></script>
         <script type="text/javascript" src="js/crossfilter.js"></script>
         <script type="text/javascript" src="js/dc.js"></script>
@@ -25,10 +26,11 @@
              {typeNum: ${d.type_number}, type: "${d.typeName}", money: ${d.money}, date: ${d.date}},
            </c:forEach>
            ];
-
-           ndx = crossfilter(allData);
-           dimension = ndx.dimension(function(d) { return d.typeNum; });
-           dimension.filter([1,2,3,4,5,6,7,8,9,10,11]);
+           expenses = _.filter(allData, function(data) {
+             return data.typeNum !== 12;
+           });
+           ndx = crossfilter(expenses);
+           dimension = ndx.dimension(function(d) { return d.type; });
 
            sumGroup = dimension.group().reduceSum(function(d) {
              return d.money;
@@ -37,9 +39,8 @@
            chart
              .width(300)
              .height(300)
-             .innerRadius(70)
+             .innerRadius(30)
              .minAngleForLabel(0)
-
              .dimension(dimension)
              .group(sumGroup)
              .legend(dc.legend());
