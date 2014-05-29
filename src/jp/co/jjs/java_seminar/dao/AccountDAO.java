@@ -69,7 +69,7 @@ public class AccountDAO {
         int startdate = sy * 10000 + sm * 100;
         int enddate = ey * 10000 + em * 100;
         int i = 0;
-        String sql = "SELECT * FROM DATA,TYPE_MASTER WHERE DATE > " + startdate
+        String sql = "SELECT * FROM DATA LEFT OUTER JOIN TYPE_MASTER ON DATA.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > " + startdate
                 + "AND DATE < " + enddate + " AND USER_NUMBER = " + user_number;
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
