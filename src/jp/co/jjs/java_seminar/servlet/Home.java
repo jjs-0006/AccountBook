@@ -70,7 +70,7 @@ public class Home extends HttpServlet {
         }*/
         ArrayList<Data> datalist = adao.getData(year, month, user_number);
         ArrayList<Goal> goallist = adao.getGoal(year, month, user_number);
-        request.setAttribute("data", datalist);
+        session.setAttribute("data", datalist);
         request.setAttribute("goal", goallist);
         request.setAttribute("message", message);
         session.setAttribute("year", year);
