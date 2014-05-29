@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import jp.co.jjs.java_seminar.javabeans.Data;
 import jp.co.jjs.java_seminar.javabeans.Goal;
 
 public class AccountDAO {
@@ -28,11 +29,44 @@ public class AccountDAO {
         }
     }
 
+    public ArrayList<Data> getData(int y, int m, int user_number){
+        ArrayList<Data> datalist = new ArrayList<>();
+        int date = y * 10000 + m * 100;
+        int i = 0;
+        String sql = "SELECT * FROM DATA,TYPE_MASTER WHERE DATE > " + date
+                + "AND DATE < " + (date + 100) + " AND USER_NUMBER = "
+                + user_number;
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()){
+                    Data data = new Data();
+                    data.setData_number(rs.getInt("DATA_NUMBER"));
+                    data.setUser_number(rs.getInt("USER_NUMBER"));
+                    data.setType_number(rs.getInt("TYPE_NUMBER"));
+                    data.setTypeName(rs.getString("TYPE_NAME"));
+                    data.setDate(rs.getInt("DATE"));
+                    data.setMoney(rs.getInt("MONEY"));
+                    data.setNote(rs.getString("NOTE"));
+                    datalist.set(i, data);
+                    i++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datalist;
+
+    }
+
+    //目標を取得する関数
     public ArrayList<Goal> getGoal(int y, int m, int user_number) {
         ArrayList<Goal> goallist = new ArrayList<>();
         int date = y * 10000 + m * 100;
         int i = 0;
-        String sql = "SELECT * FROM GOAL WHERE DATE > " + date
+        String sql = "SELECT * FROM GOAL,TYPE_MASTER WHERE DATE > " + date
                 + "AND DATE < " + (date + 100) + " AND USER_NUMBER = "
                 + user_number;
         try (Connection con = ds.getConnection();
@@ -44,6 +78,7 @@ public class AccountDAO {
                     goal.setData_number(rs.getInt("DATA_NUMBER"));
                     goal.setUser_number(rs.getInt("USER_NUMBER"));
                     goal.setType_number(rs.getInt("TYPE_NUMBER"));
+                    goal.setTypeName(rs.getString("TYPE_NAME"));
                     goal.setDate(rs.getInt("DATE"));
                     goal.setMoney(rs.getInt("MONEY"));
                     goal.setRank(rs.getInt("RANK"));

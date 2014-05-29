@@ -6,6 +6,7 @@ public class Goal implements Serializable{
     private int data_number;
     private int user_number;
     private int type_number;
+    private String typeName;
     private int date;
     private int money;
     private int rank;
@@ -28,6 +29,12 @@ public class Goal implements Serializable{
     }
     public void setType_number(int type_number) {
         this.type_number = type_number;
+    }
+    public String getTypeName() {
+        return typeName;
+    }
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
     public int getDate() {
         return date;
