@@ -13,19 +13,18 @@ import javax.servlet.http.HttpSession;
 
 import jp.co.jjs.java_seminar.dao.AccountDAO;
 import jp.co.jjs.java_seminar.javabeans.Data;
-import jp.co.jjs.java_seminar.javabeans.Goal;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class Statistics
  */
-@WebServlet("/home")
-public class Home extends HttpServlet {
+@WebServlet("/statistics")
+public class Statistics extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() {
+    public Statistics() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,8 +35,7 @@ public class Home extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        process(request, response);
+        process(request,response);
     }
 
     /**
@@ -46,43 +44,34 @@ public class Home extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        process(request, response);
+        process(request,response);
     }
 
     private void process(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("WEB-INF/jsp/home.jsp");
-        // 年月日・ユーザー番号はログイン時に初期化
-        String[] message = { "セーフ", "アウト" };
-        int year = 2014;
-        int month = 5;
-        int day = 29;
-        int user_number = 1;
+                .getRequestDispatcher("WEB-INF/statisticst.jsp");
         AccountDAO adao = new AccountDAO();
         HttpSession session = request.getSession();
-  /*      String button = request.getParameter("");
-        if (button.equals("登録")) {
-            adao.setData(year, month, day, user_number,
-                    Integer.parseInt(request.getParameter("type_number")),
-                    Integer.parseInt(request.getParameter("money")), request.getParameter("note"));
-        }*/
-        ArrayList<Data> datalist = adao.getData(year, month, user_number);
-        ArrayList<Goal> goallist = adao.getGoal(year, month, user_number);
-        session.setAttribute("data", datalist);
-        request.setAttribute("goal", goallist);
-        request.setAttribute("message", message);
-        session.setAttribute("year", year);
-        session.setAttribute("month", month);
-        session.setAttribute("day", day);
-        System.out.println(datalist.get(0).getMoney());
-
-
-        //グラフ用のデータを作成
-
-
+        int term = Integer.parseInt(request.getParameter("term"));
+        int type_number = Integer.parseInt(request.getParameter("type_number"));
+        int year = 2014;
+        int month = 5;
+        int user_number = 1;
+        int syear = 0;
+        int smonth = 0;
+        if((month - term)  > 0){
+            syear = year;
+            smonth = month - term;
+        }
+        else{
+            syear = year - 1;
+            smonth = month - term + 12;
+        }
+        ArrayList<Data> datalist = adao.getTermData(syear, smonth, year, month, user_number, type_number);
+        session.setAttribute("datalist", datalist);
         dispatcher.forward(request, response);
+
     }
 
 }
