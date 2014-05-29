@@ -29,7 +29,8 @@ public class AccountDAO {
         }
     }
 
-    public ArrayList<Data> getData(int y, int m, int user_number){
+    // 指定した月のデータを取得
+    public ArrayList<Data> getData(int y, int m, int user_number) {
         ArrayList<Data> datalist = new ArrayList<>();
         int date = y * 10000 + m * 100;
         int i = 0;
@@ -40,7 +41,7 @@ public class AccountDAO {
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
             try (ResultSet rs = ps.executeQuery()) {
-                while(rs.next()){
+                while (rs.next()) {
                     Data data = new Data();
                     data.setData_number(rs.getInt("DATA_NUMBER"));
                     data.setUser_number(rs.getInt("USER_NUMBER"));
@@ -61,7 +62,91 @@ public class AccountDAO {
 
     }
 
-    //目標を取得する関数
+    // 一定期間のデータを取得する関数 今月から指定した期間(月単位)のデータを取得
+    public ArrayList<Data> getTermData(int sy, int sm, int ey, int em,
+            int user_number) {
+        ArrayList<Data> datalist = new ArrayList<>();
+        int startdate = sy * 10000 + sm * 100;
+        int enddate = ey * 10000 + em * 100;
+        int i = 0;
+        String sql = "SELECT * FROM DATA,TYPE_MASTER WHERE DATE > " + startdate
+                + "AND DATE < " + enddate + " AND USER_NUMBER = " + user_number;
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Data data = new Data();
+                    data.setData_number(rs.getInt("DATA_NUMBER"));
+                    data.setUser_number(rs.getInt("USER_NUMBER"));
+                    data.setType_number(rs.getInt("TYPE_NUMBER"));
+                    data.setTypeName(rs.getString("TYPE_NAME"));
+                    data.setDate(rs.getInt("DATE"));
+                    data.setMoney(rs.getInt("MONEY"));
+                    data.setNote(rs.getString("NOTE"));
+                    datalist.set(i, data);
+                    i++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datalist;
+
+    }
+
+    // データを登録する関数
+    public void setData(int y, int m, int d, int user_number, int type_number,
+            int money, String note) {
+        int date = y * 10000 + m * 100 + d;
+        String sql = "INSERT INTO DATA (USER_NUMBER,TYPE_NUMBER,DATE,MONEY,NOTE) VALUES("
+                + user_number
+                + ","
+                + type_number
+                + ","
+                + date
+                + ","
+                + money
+                + "," + note + ")";
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // データを修正する関数
+    public void revData(int user_number, int data_number,
+            int type_number, int money, String note) {
+        String sql = "UPDATE DATA SET TYPE_NUMBER=" + type_number + ",money="
+                + money + ",note='" + note + "' WHERE USER_NUMBER="
+                + user_number + " AND DATA_NUMBER=" + data_number;
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // データを消去する関数
+    public void delData(int user_number, int data_number) {
+        String sql = "DELETE FROM DATA WHERE USER_NUMBER="
+                + user_number + " AND DATA_NUMBER=" + data_number;
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // 目標を取得する関数
     public ArrayList<Goal> getGoal(int y, int m, int user_number) {
         ArrayList<Goal> goallist = new ArrayList<>();
         int date = y * 10000 + m * 100;
@@ -73,7 +158,7 @@ public class AccountDAO {
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
             try (ResultSet rs = ps.executeQuery()) {
-                while(rs.next()){
+                while (rs.next()) {
                     Goal goal = new Goal();
                     goal.setData_number(rs.getInt("DATA_NUMBER"));
                     goal.setUser_number(rs.getInt("USER_NUMBER"));
@@ -103,7 +188,7 @@ public class AccountDAO {
             int sub = goallist.get(i) - moneylist.get(i);
             int rank = 0;
             sublist.set(i, sub);
-            //ランクの判定
+            // ランクの判定
             if (sub < 10000) {
                 rank = 1;
             } else {
