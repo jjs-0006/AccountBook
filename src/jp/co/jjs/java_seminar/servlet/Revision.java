@@ -15,16 +15,16 @@ import jp.co.jjs.java_seminar.dao.AccountDAO;
 import jp.co.jjs.java_seminar.javabeans.Data;
 
 /**
- * Servlet implementation class Revisionlist
+ * Servlet implementation class Revision
  */
-@WebServlet("/revisionlist")
-public class Revisionlist extends HttpServlet {
+@WebServlet("/revision")
+public class Revision extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Revisionlist() {
+    public Revision() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +35,7 @@ public class Revisionlist extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
+        process(request,response);
     }
 
     /**
@@ -44,24 +44,21 @@ public class Revisionlist extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
+        process(request,response);
     }
 
     private void process(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("WEB-INF/jsp/revisionlist.jsp");
-        AccountDAO adao = new AccountDAO();
+                .getRequestDispatcher("WEB-INF/jsp/revision.jsp");
         HttpSession session = request.getSession();
-        int year = 2014;
-        int month = 5;
+        int year = 2;// (int)session.getAttribute("year");
+        int month = 3;// (int)session.getAttribute("month");
         int user_number = 1;
-        int count = 0;
-        ArrayList<Data> datalist = adao.getData(year, month, user_number);
-        while(count < datalist.size()){
-            count++;
-        }
-        session.setAttribute("datalist", datalist);
+        ArrayList<Data> datalist = (ArrayList<Data>) session.getAttribute("datalist");
+        AccountDAO adao = new AccountDAO();
+
+
         dispatcher.forward(request, response);
 
     }
