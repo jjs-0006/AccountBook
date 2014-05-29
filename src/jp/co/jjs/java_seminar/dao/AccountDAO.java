@@ -50,7 +50,7 @@ public class AccountDAO {
                     data.setDate(rs.getInt("DATE"));
                     data.setMoney(rs.getInt("MONEY"));
                     data.setNote(rs.getString("NOTE"));
-                    datalist.set(i, data);
+                    datalist.add(i, data);
                     i++;
                 }
             }
@@ -84,7 +84,7 @@ public class AccountDAO {
                     data.setDate(rs.getInt("DATE"));
                     data.setMoney(rs.getInt("MONEY"));
                     data.setNote(rs.getString("NOTE"));
-                    datalist.set(i, data);
+                    datalist.add(i, data);
                     i++;
                 }
             }
@@ -168,7 +168,7 @@ public class AccountDAO {
                     goal.setMoney(rs.getInt("MONEY"));
                     goal.setRank(rs.getInt("RANK"));
                     goal.setSub_money(rs.getInt("SUB_MONEY"));
-                    goallist.set(i, goal);
+                    goallist.add(i, goal);
                     i++;
                 }
             }
