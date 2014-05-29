@@ -40,7 +40,7 @@ public class JspTestServlet extends HttpServlet {
 
 	private void process(HttpServletRequest request,
             HttpServletResponse response)throws ServletException, IOException{
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/goal.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/revisionlist.jsp");
         dispatcher.forward(request, response);
     }
 
