@@ -3,13 +3,13 @@
 <center>
     <table>
         <tr>
-            <th><form method="post" action="Home">
+            <th><form method="post" action="home">
                         <input type="submit" value="ホーム">
             </form></th>
-            <th><form method="post" action="Goal">
+            <th><form method="post" action="goal">
                         <input type="submit" value="目標登録">
             </form></th>
-            <th><form method="post" action="Revision">
+            <th><form method="post" action="revision">
                         <input type="submit" value="修正">
             </form></th>
             <th><form method="post" action="statstics">

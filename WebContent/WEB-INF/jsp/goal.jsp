@@ -65,8 +65,13 @@
                     <th>:<input type="text" size="30" name="id"></th>
                     </tr>
                 </table>
+                <table><tr>
+                    <th><input type="submit" value="登録"></th>
             </form>
-            <th><input type="submit" value="登録"></th>
+            <form method="post" action="home">
+                    <th><input type="submit" value="キャンセル"></th>
+                </tr></table>
+            </form>
         </center>
     </body>
 </html>
