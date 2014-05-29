@@ -53,7 +53,7 @@ public class GoalReg extends HttpServlet {
         HttpSession session = request.getSession();
         int year = (int)session.getAttribute("year");
         int month = (int)session.getAttribute("month");
-        int user_number = (int) session.getAttribute("user_number");
+        int user_number = 1;
         ArrayList<Goal> goallist = new ArrayList<>();
         AccountDAO adao = new AccountDAO();
         goallist = adao.getGoal(year, month, user_number);
