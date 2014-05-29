@@ -7,14 +7,28 @@
         <title>修正一覧</title>
     </head>
     <body>
-        <form method="post" action="">
-            <table>
-                <tr>
-                <th>分類・金額・備考<th>
-                <th><input type="submit" value="削除"></th>
-                <th><input type="submit" value="編集"></th>
-                <tr>
-            </table>
-        </form>
+    <center>
+        <table>
+            <tr>
+            <%
+
+                for(int i = 0; i < list.size(); i++ ){
+            %>
+                日付
+                <br>
+                <th>分類・金額・備考
+                <th>
+                <th><form method="post" action="">
+                        <input type="submit" name="<%= i %>>" value="削除">
+                    </form></th>
+                <th><form method="post" action="">
+                        <input type="submit" value="編集">
+                    </form></th>
+            <%
+                }
+            %>
+            <tr>
+        </table>
+    </center>
     </body>
 </html>
