@@ -34,8 +34,11 @@ public class AccountDAO {
         ArrayList<Data> datalist = new ArrayList<>();
         int date = y * 10000 + m * 100;
         int i = 0;
-        String sql = "SELECT * FROM DATA,TYPE_MASTER WHERE DATE > " + date
-                + "AND DATE < " + (date + 100) + " AND USER_NUMBER = "
+        String sql = "SELECT * FROM DATA LEFT OUTER JOIN TYPE_MASTER ON DATA.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > "
+                + date
+                + "AND DATE < "
+                + (date + 100)
+                + " AND USER_NUMBER = "
                 + user_number;
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -64,13 +67,20 @@ public class AccountDAO {
 
     // 一定期間のデータを取得する関数 今月から指定した期間(月単位)のデータを取得
     public ArrayList<Data> getTermData(int sy, int sm, int ey, int em,
-            int user_number) {
+            int user_number, int type_number) {
         ArrayList<Data> datalist = new ArrayList<>();
         int startdate = sy * 10000 + sm * 100;
         int enddate = ey * 10000 + em * 100;
         int i = 0;
-        String sql = "SELECT * FROM DATA,TYPE_MASTER WHERE DATE > " + startdate
-                + "AND DATE < " + enddate + " AND USER_NUMBER = " + user_number;
+        String sql = "SELECT * FROM DATA LEFT OUTER JOIN TYPE_MASTER ON DATA.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > "
+                + startdate
+                + "AND DATE < "
+                + enddate
+                + " AND USER_NUMBER = "
+                + user_number;
+        if (type_number != 13) {
+            sql += " AND TYPE_NUMBER = " + type_number;
+        }
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -119,8 +129,8 @@ public class AccountDAO {
     }
 
     // データを修正する関数
-    public void revData(int user_number, int data_number,
-            int type_number, int money, String note) {
+    public void revData(int user_number, int data_number, int type_number,
+            int money, String note) {
         String sql = "UPDATE DATA SET TYPE_NUMBER=" + type_number + ",money="
                 + money + ",note='" + note + "' WHERE USER_NUMBER="
                 + user_number + " AND DATA_NUMBER=" + data_number;
@@ -135,8 +145,8 @@ public class AccountDAO {
 
     // データを消去する関数
     public void delData(int user_number, int data_number) {
-        String sql = "DELETE FROM DATA WHERE USER_NUMBER="
-                + user_number + " AND DATA_NUMBER=" + data_number;
+        String sql = "DELETE FROM DATA WHERE USER_NUMBER=" + user_number
+                + " AND DATA_NUMBER=" + data_number;
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.execute();
@@ -151,7 +161,7 @@ public class AccountDAO {
         ArrayList<Goal> goallist = new ArrayList<>();
         int date = y * 10000 + m * 100;
         int i = 0;
-        String sql = "SELECT * FROM GOAL,TYPE_MASTER WHERE DATE > " + date
+        String sql = "SELECT * FROM GOAL LEFT OUTER JOIN TYPE_MASTER ON GOAL.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > " + date
                 + "AND DATE < " + (date + 100) + " AND USER_NUMBER = "
                 + user_number;
         try (Connection con = ds.getConnection();
@@ -277,5 +287,3 @@ public class AccountDAO {
         }
     }
 }
-
-
