@@ -35,6 +35,7 @@ public class GoalReg extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        process(request, response);
     }
 
     /**
@@ -51,8 +52,8 @@ public class GoalReg extends HttpServlet {
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("WEB-INF/jsp/goal.jsp");
         HttpSession session = request.getSession();
-        int year = (int)session.getAttribute("year");
-        int month = (int)session.getAttribute("month");
+        int year = 2;//(int)session.getAttribute("year");
+        int month = 3;//(int)session.getAttribute("month");
         int user_number = 1;
         ArrayList<Goal> goallist = new ArrayList<>();
         AccountDAO adao = new AccountDAO();
