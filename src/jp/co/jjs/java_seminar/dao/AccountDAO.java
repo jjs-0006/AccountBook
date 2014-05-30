@@ -293,19 +293,19 @@ public class AccountDAO {
         }
     }
 
+
+    //ログイン処理
     public int login(String id, String pass) {
         String sql = "SELECT USER_NUMBER FROM USER WHERE ID='" + id + "' AND PASS='" + pass + "'";
         int result = 0;
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
-
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     result = rs.getInt("USER_NUMBER");
                 }
 
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
