@@ -64,8 +64,8 @@ public class Home extends HttpServlet {
         int user_number = 1;
         AccountDAO adao = new AccountDAO();
 
-        String button = request.getParameter("");
-        if (button.equals("登録")) {
+        ;
+        if (request.getParameter("goalentry") != null) {
             adao.setData(year, month, day, user_number,
                     Integer.parseInt(request.getParameter("type_number")),
                     Integer.parseInt(request.getParameter("money")), request.getParameter("note"));
