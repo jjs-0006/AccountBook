@@ -53,8 +53,12 @@ public class Statistics extends HttpServlet {
                 .getRequestDispatcher("WEB-INF/statisticst.jsp");
         AccountDAO adao = new AccountDAO();
         HttpSession session = request.getSession();
-        int term = Integer.parseInt(request.getParameter("time"));
-        int type_number = Integer.parseInt(request.getParameter("grouping"));
+        int term = 0;
+        int type_number = 1;
+        if(request.getParameter("time") != null){
+            term = Integer.parseInt(request.getParameter("time"));
+            type_number = Integer.parseInt(request.getParameter("grouping"));
+        }
         int year = 2014;
         int month = 5;
         int user_number = 1;
@@ -68,8 +72,10 @@ public class Statistics extends HttpServlet {
             syear = year - 1;
             smonth = month - term + 12;
         }
-        ArrayList<Data> datalist = adao.getTermData(syear, smonth, year, month, user_number, type_number);
-        session.setAttribute("datalist", datalist);
+        if(term > 0 ){
+            ArrayList<Data> datalist = adao.getTermData(syear, smonth, year, month, user_number, type_number);
+            session.setAttribute("datalist", datalist);
+        }
         dispatcher.forward(request, response);
 
     }
