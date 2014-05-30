@@ -166,7 +166,7 @@ public class AccountDAO {
         int i = 0;
         String sql = "SELECT * FROM GOAL LEFT OUTER JOIN TYPE_MASTER ON GOAL.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > "
                 + date
-                + "AND DATE < "
+                + " AND DATE < "
                 + (date + 100)
                 + " AND USER_NUMBER = "
                 + user_number;

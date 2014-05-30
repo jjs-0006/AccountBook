@@ -56,7 +56,7 @@ public class LoginQuery extends HttpServlet {
         RequestDispatcher dispatcher;
         Calendar cal = Calendar.getInstance();
         session.setAttribute("year", cal.get(Calendar.YEAR));
-        session.setAttribute("month", cal.get(Calendar.MONTH + 1));
+        session.setAttribute("month", cal.get(Calendar.MONTH ) + 1);
         int result = adao.login(id, pass);
         if(result > 0){
             session.setAttribute("user_number", result);
