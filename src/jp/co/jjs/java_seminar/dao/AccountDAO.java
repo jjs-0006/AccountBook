@@ -311,4 +311,34 @@ public class AccountDAO {
         }
         return result;
     }
+
+    public int entry(String id,String pass){
+        int result = -1;
+        String sql = "SELECT COUNT(*) FROM USER WHERE ID='" + id + "'";
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    result = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if(result > 0){
+            return -1;
+        }
+        else{
+            String ensql = "INSERT INTO USER (ID,PASS) VALUES(" + id + "," + pass + ")";
+            try (Connection con = ds.getConnection();
+                    PreparedStatement ps = con.prepareStatement(ensql)) {
+                ps.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return 1;
+        }
+
+    }
 }
