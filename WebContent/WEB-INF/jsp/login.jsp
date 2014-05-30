@@ -7,7 +7,7 @@
             <title>ログインページ</title>
     </head>
     <body>
-        <form method="post" action="Entry">
+        <form method="post" action="entry">
             <Div Align="right"><input type="submit" value="新規登録"></Div>
         </form>
         <form method="post" action="loginquery">
