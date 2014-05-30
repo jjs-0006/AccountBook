@@ -162,7 +162,7 @@ public class AccountDAO {
     // 目標を取得する関数
     public ArrayList<Goal> getGoal(int y, int m, int user_number) {
         ArrayList<Goal> goallist = new ArrayList<>();
-        int date = y * 10000 + m * 100;
+        int date = y * 10000 + m * 100 - 1;
         int i = 0;
         String sql = "SELECT * FROM GOAL LEFT OUTER JOIN TYPE_MASTER ON GOAL.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > "
                 + date
@@ -170,6 +170,7 @@ public class AccountDAO {
                 + (date + 100)
                 + " AND USER_NUMBER = "
                 + user_number;
+        System.out.println(sql);
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
