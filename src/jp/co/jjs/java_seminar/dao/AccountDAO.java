@@ -312,6 +312,8 @@ public class AccountDAO {
         return result;
     }
 
+
+    //登録処理
     public int entry(String id,String pass){
         int result = -1;
         String sql = "SELECT COUNT(*) FROM USER WHERE ID='" + id + "'";

@@ -1,7 +1,6 @@
 package jp.co.jjs.java_seminar.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,22 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import jp.co.jjs.java_seminar.dao.AccountDAO;
-import jp.co.jjs.java_seminar.javabeans.Goal;
 
 /**
- * Servlet implementation class Goal
+ * Servlet implementation class EntryQuery
  */
-@WebServlet("/goal")
-public class GoalReg extends HttpServlet {
+@WebServlet("/entryquery")
+public class EntryQuery extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GoalReg() {
+    public EntryQuery() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,17 +45,24 @@ public class GoalReg extends HttpServlet {
     }
 
     private void process(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException{
-        RequestDispatcher dispatcher = request
-                .getRequestDispatcher("WEB-INF/jsp/goal.jsp");
-        HttpSession session = request.getSession();
-        int year = (int)session.getAttribute("year");
-        int month = (int)session.getAttribute("month");
-        int user_number = 1;
-        ArrayList<Goal> goallist = new ArrayList<>();
+            HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher;
         AccountDAO adao = new AccountDAO();
-        goallist = adao.getGoal(year, month, user_number);
-        request.setAttribute("goallist", goallist);
+        String id = request.getParameter("id");
+        String pass1 = request.getParameter("pass1");
+        String pass2 = request.getParameter("pass2");
+        if(!pass1.equals(pass2)){
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/entry.jsp");
+            request.setAttribute("message", "パスワードを2回入力してください");
+        }
+        int result = adao.entry(id, pass1);
+        if(result == 1){
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/entry.jsp");
+            request.setAttribute("message", "すでに登録されているIDです");
+        }
+        else{
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
+        }
         dispatcher.forward(request, response);
 
     }

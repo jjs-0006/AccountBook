@@ -62,6 +62,7 @@ public class Revisionlist extends HttpServlet {
 
             if(request.getParameter("" + count) != null){
                 adao.delData(user_number, datalist.get(count).getData_number());
+                datalist = adao.getData(year, month, user_number);
                 break;
             }
             count++;
