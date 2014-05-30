@@ -14,12 +14,14 @@
             <h1>今月の目標</h1>
             <%
                 ArrayList<Goal> goallist = (ArrayList<Goal>)request.getAttribute("goallist");
+
+
             %>
             <form method="post" action="">
                 <table>
                     <tr>
                     <th>光熱費</th>
-                    <th>:<input type="text" size="30" name="id1" value="<%= goallist.get(0) != null ? goallist.get(0).getMoney(): "" %>">"></th>
+                    <th>:<input type="text" size="30" name="id1" value="<%= goallist.get(0) != null ? goallist.get(0).getMoney(): "" %>"></th>
                     </tr>
                      <tr>
                     <th>食費</th>
