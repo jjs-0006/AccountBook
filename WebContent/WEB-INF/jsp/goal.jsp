@@ -13,7 +13,7 @@
         <jsp:include page ="header.jsp"/>
             <h1>今月の目標</h1>
             <%
-                ArrayList<Goal> goallist = request.getSession().getAttribute();
+                ArrayList<Goal> goallist = (ArrayList<Goal>)(request.getSession().getAttribute(""));
             %>
             <form method="post" action="">
                 <table>

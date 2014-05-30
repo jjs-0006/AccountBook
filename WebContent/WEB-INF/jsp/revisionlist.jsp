@@ -18,10 +18,10 @@
                 for(int i = 0; i < datalist.size(); i++ ){
             %>
                 <br>
-                <th>日付</th>
-                <th>分類</th>
-                <th>金額</th>
-                <th>備考</th>
+                <th><%= datalist.get(i).getDate() %></th>
+                <th><%= datalist.get(i).getTypeName() %>　</th>
+                <th><%= datalist.get(i).getMoney() %>円</th>
+                <th><%= datalist.get(i).getNote() %></th>
                 <th><form method="post" action="revisionlist">
                         <input type="submit" name="<%= i %>" value="削除">
                     </form></th>
@@ -33,6 +33,6 @@
             %>
             <tr>
         </table>
-    </center>
+        </center>
     </body>
 </html>
