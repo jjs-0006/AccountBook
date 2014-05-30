@@ -15,9 +15,9 @@
                 <h1>家計簿ログインページ</h1>
                 <table>
                 <%
-                    if(request.getSession().getAttribute("massage") != null){
+                    if(request.getAttribute("message") != null){
                 %>
-                <%= request.getSession().getAttribute("massage") %>
+                <%= request.getAttribute("message") %>
                 <%
                     }
                 %>
