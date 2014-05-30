@@ -17,7 +17,7 @@
 
 
             %>
-            <form method="post" action="">
+            <form method="post" action="home">
                 <table>
                     <tr>
                     <th>光熱費</th>

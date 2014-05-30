@@ -48,5 +48,26 @@
            chart.render();
 
         </script>
+        収支登録<br>
+        <table>
+        <tr><th><select name="grouping">
+                <option value="1">光熱費</option>
+                <option value="2">食費</option>
+                <option value="3">保険</option>
+                <option value="4">生活雑貨・日用品</option>
+                <option value="5">通信費</option>
+                <option value="6">医療費</option>
+                <option value="7">交通費</option>
+                <option value="8">美容費</option>
+                <option value="9">被服費</option>
+                <option value="10">住宅費</option>
+                <option value="11">その他</option>
+                <option value="12">収入</option>
+                <option value="13">すべての支出</option>
+       </select></th>
+       <th><input type="text" size="10" name="money">円</th>
+       <th> </th>
+       </tr>
+       </table>
     </body>
 </html>
