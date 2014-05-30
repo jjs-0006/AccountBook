@@ -64,6 +64,7 @@ public class LoginQuery extends HttpServlet {
         }
         else{
             dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
+            session.setAttribute("message", "IDかパスワードが違います");
         }
         dispatcher.forward(request, response);
 
