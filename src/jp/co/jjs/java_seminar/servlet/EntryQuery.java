@@ -1,7 +1,6 @@
 package jp.co.jjs.java_seminar.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,22 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import jp.co.jjs.java_seminar.dao.AccountDAO;
-import jp.co.jjs.java_seminar.javabeans.Data;
 
 /**
- * Servlet implementation class Revisionlist
+ * Servlet implementation class EntryQuery
  */
-@WebServlet("/revisionlist")
-public class Revisionlist extends HttpServlet {
+@WebServlet("/entryquery")
+public class EntryQuery extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Revisionlist() {
+    public EntryQuery() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,25 +46,23 @@ public class Revisionlist extends HttpServlet {
 
     private void process(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request
-                .getRequestDispatcher("WEB-INF/jsp/revisionlist.jsp");
+        RequestDispatcher dispatcher;
         AccountDAO adao = new AccountDAO();
-        HttpSession session = request.getSession();
-        int year = 2014;
-        int month = 5;
-        int user_number = 1;
-        int count = 0;
-        ArrayList<Data> datalist = adao.getData(year, month, user_number);
-        while(count < datalist.size()){
-
-            if(request.getParameter("" + count) != null){
-                adao.delData(user_number, datalist.get(count).getData_number());
-                datalist = adao.getData(year, month, user_number);
-                break;
-            }
-            count++;
+        String id = request.getParameter("id");
+        String pass1 = request.getParameter("pass1");
+        String pass2 = request.getParameter("pass2");
+        if(!pass1.equals(pass2)){
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/entry.jsp");
+            request.setAttribute("message", "パスワードを2回入力してください");
         }
-        session.setAttribute("datalist", datalist);
+        int result = adao.entry(id, pass1);
+        if(result == 1){
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/entry.jsp");
+            request.setAttribute("message", "すでに登録されているIDです");
+        }
+        else{
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
+        }
         dispatcher.forward(request, response);
 
     }
