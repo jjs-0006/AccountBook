@@ -7,28 +7,29 @@
         <title>統計</title>
     </head>
     <body>
+        <jsp:include page ="header.jsp"/>
         <center><table>
             <tr>
             <th><select name="time">
-                <option value="1ヶ月">1ヶ月</option>
-                <option value="3ヶ月">3ヶ月</option>
-                <option value="1年">1年</option>
+                <option value="1">1ヶ月</option>
+                <option value="3">3ヶ月</option>
+                <option value="12">1年</option>
             </select></th>
 
             <th><select name="grouping">
-                <option value="光熱費">光熱費</option>
-                <option value="食費">食費</option>
-                <option value="保険">保険</option>
-                <option value="生活雑貨・日用品">生活雑貨・日用品</option>
-                <option value="通信費">通信費</option>
-                <option value="医療費">医療費</option>
-                <option value="交通費">交通費</option>
-                <option value="美容費">美容費</option>
-                <option value="被服費">被服費</option>
-                <option value="住宅費">住宅費</option>
-                <option value="その他">その他</option>
-                <option value="すべての支出">すべての支出</option>
-                <option value="収入">収入</option>
+                <option value="1">光熱費</option>
+                <option value="2">食費</option>
+                <option value="3">保険</option>
+                <option value="4">生活雑貨・日用品</option>
+                <option value="5">通信費</option>
+                <option value="6">医療費</option>
+                <option value="7">交通費</option>
+                <option value="8">美容費</option>
+                <option value="9">被服費</option>
+                <option value="10">住宅費</option>
+                <option value="11">その他</option>
+                <option value="12">収入</option>
+                <option value="13">すべての支出</option>
             </select></th>
 
             <th><input type="submit" value="表示"></th>

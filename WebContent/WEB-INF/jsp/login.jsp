@@ -10,10 +10,17 @@
         <form method="post" action="Entry">
             <Div Align="right"><input type="submit" value="新規登録"></Div>
         </form>
-        <form method="post" action="LoginCheck">
+        <form method="post" action="loginquery">
             <center>
                 <h1>家計簿ログインページ</h1>
                 <table>
+                <%
+                    if(request.getSession().getAttribute("massage") != null){
+                %>
+                <%= request.getSession().getAttribute("massage") %>
+                <%
+                    }
+                %>
                     <tr>
                         <th>ID</th>
                         <th>:<input type="text" size="30" name="id"></th></br>

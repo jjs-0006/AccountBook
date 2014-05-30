@@ -1,3 +1,5 @@
+<%@page import="jp.co.jjs.java_seminar.javabeans.Data"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,22 +10,24 @@
     </head>
     <body>
     <center>
+        <jsp:include page ="header.jsp"/>
         <table>
             <tr>
             <%
-
-                for(int i = 0; i < list.size(); i++ ){
+            ArrayList<Data> datalist = (ArrayList<Data>)(request.getSession().getAttribute("datalist"));
+                for(int i = 0; i < datalist.size(); i++ ){
             %>
-                日付
                 <br>
-                <th>分類・金額・備考
-                <th>
-                <th><form method="post" action="">
-                        <input type="submit" name="<%= i %>>" value="削除">
+                <th>日付</th>
+                <th>分類</th>
+                <th>金額</th>
+                <th>備考</th>
+                <th><form method="post" action="revisionlist">
+                        <input type="submit" name="<%= i %>" value="削除">
                     </form></th>
-                <th><form method="post" action="">
-                        <input type="submit" value="編集">
-                    </form></th>
+                <th><form method="post" action="revision">
+                        <input type="submit" name="<%= i %>" value="編集">
+                    </form></th></tr>
             <%
                 }
             %>
