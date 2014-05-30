@@ -16,7 +16,7 @@ import jp.co.jjs.java_seminar.dao.AccountDAO;
 /**
  * Servlet implementation class LoginQuery
  */
-@WebServlet("/LoginQuery")
+@WebServlet("/loginquery")
 public class LoginQuery extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
