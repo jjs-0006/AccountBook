@@ -81,6 +81,9 @@ public class AccountDAO {
         if (type_number != 13) {
             sql += " AND TYPE_NUMBER = " + type_number;
         }
+        else{
+            sql += "AND TYPE_NUMBER < 12";
+        }
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -161,8 +164,11 @@ public class AccountDAO {
         ArrayList<Goal> goallist = new ArrayList<>();
         int date = y * 10000 + m * 100;
         int i = 0;
-        String sql = "SELECT * FROM GOAL LEFT OUTER JOIN TYPE_MASTER ON GOAL.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > " + date
-                + "AND DATE < " + (date + 100) + " AND USER_NUMBER = "
+        String sql = "SELECT * FROM GOAL LEFT OUTER JOIN TYPE_MASTER ON GOAL.TYPE_NUMBER = TYPE_MASTER.TYPE_NUMBER WHERE DATE > "
+                + date
+                + "AND DATE < "
+                + (date + 100)
+                + " AND USER_NUMBER = "
                 + user_number;
         try (Connection con = ds.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -285,5 +291,24 @@ public class AccountDAO {
         } else {
             // 結果がとれなかった時
         }
+    }
+
+    public int login(String id, String pass) {
+        String sql = "SELECT USER_NUMBER FROM USER WHERE ID='" + id + "' AND PASS='" + pass + "'";
+        int result = 0;
+        try (Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    result = rs.getInt("USER_NUMBER");
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
