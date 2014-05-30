@@ -58,7 +58,7 @@ public class GoalReg extends HttpServlet {
         ArrayList<Goal> goallist = new ArrayList<>();
         AccountDAO adao = new AccountDAO();
         goallist = adao.getGoal(year, month, user_number);
-        System.out.println(goallist.get(0).getMoney());
+//        System.out.println(goallist.get(0).getMoney());
         request.setAttribute("goallist", goallist);
         dispatcher.forward(request, response);
 

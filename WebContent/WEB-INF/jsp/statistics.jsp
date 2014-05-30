@@ -7,6 +7,7 @@
         <title>統計</title>
     </head>
     <body>
+        <form method="post" action="statistics">
         <jsp:include page ="header.jsp"/>
         <center><table>
             <tr>
@@ -34,6 +35,9 @@
 
             <th><input type="submit" value="表示"></th>
             </tr>
-        </table></center>
+        </table>
+
+        </center>
+        </form>
     </body>
 </html>
