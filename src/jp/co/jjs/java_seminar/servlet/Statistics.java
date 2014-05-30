@@ -50,7 +50,7 @@ public class Statistics extends HttpServlet {
     private void process(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("WEB-INF/jsp/statisticst.jsp");
+                .getRequestDispatcher("WEB-INF/jsp/statistics.jsp");
         AccountDAO adao = new AccountDAO();
         HttpSession session = request.getSession();
         int term = 0;
