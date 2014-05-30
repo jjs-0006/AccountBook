@@ -55,8 +55,17 @@ public class Revision extends HttpServlet {
         int year = 2;// (int)session.getAttribute("year");
         int month = 3;// (int)session.getAttribute("month");
         int user_number = 1;
+        int count = 0;
         ArrayList<Data> datalist = (ArrayList<Data>) session.getAttribute("datalist");
         AccountDAO adao = new AccountDAO();
+        while(count < datalist.size()){
+            count++;
+            if(request.getParameter("button" + count) != null){
+                Data data = datalist.get(count);
+                session.setAttribute("data", data);
+                break;
+            }
+        }
 
 
         dispatcher.forward(request, response);

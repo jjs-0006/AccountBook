@@ -15,16 +15,16 @@ import jp.co.jjs.java_seminar.dao.AccountDAO;
 import jp.co.jjs.java_seminar.javabeans.Data;
 
 /**
- * Servlet implementation class Revisionlist
+ * Servlet implementation class RevisionFinish
  */
-@WebServlet("/revisionlist")
-public class Revisionlist extends HttpServlet {
+@WebServlet("/revisionfinish")
+public class RevisionFinish extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Revisionlist() {
+    public RevisionFinish() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,22 +50,16 @@ public class Revisionlist extends HttpServlet {
     private void process(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("WEB-INF/jsp/revisionlist.jsp");
-        AccountDAO adao = new AccountDAO();
+                .getRequestDispatcher("revisionlist");
         HttpSession session = request.getSession();
-        int year = 2014;
-        int month = 5;
         int user_number = 1;
-        int count = 0;
-        ArrayList<Data> datalist = adao.getData(year, month, user_number);
-        while(count < datalist.size()){
-            count++;
-            if(request.getParameter("button" + count) != null){
-                adao.delData(user_number, datalist.get(count).getData_number());
-                break;
-            }
-        }
-        session.setAttribute("datalist", datalist);
+        ArrayList<Data> datalist = (ArrayList<Data>) session
+                .getAttribute("datalist");
+        AccountDAO adao = new AccountDAO();
+        Data data = (Data) session.getAttribute("data");
+        adao.revData(user_number, data.getData_number(), data.getType_number(),
+                data.getMoney(), data.getNote());
+
         dispatcher.forward(request, response);
 
     }
