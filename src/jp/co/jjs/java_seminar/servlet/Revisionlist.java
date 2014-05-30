@@ -59,11 +59,12 @@ public class Revisionlist extends HttpServlet {
         int count = 0;
         ArrayList<Data> datalist = adao.getData(year, month, user_number);
         while(count < datalist.size()){
-            count++;
-            if(request.getParameter("button" + count) != null){
+
+            if(request.getParameter("" + count) != null){
                 adao.delData(user_number, datalist.get(count).getData_number());
                 break;
             }
+            count++;
         }
         session.setAttribute("datalist", datalist);
         dispatcher.forward(request, response);
