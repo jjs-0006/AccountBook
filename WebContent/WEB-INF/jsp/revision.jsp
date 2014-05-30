@@ -10,8 +10,9 @@
         <h1>修正画面</h1>
     </center>
     <body>
-        <form method="post" action="">
-            <center>
+        <center>
+            <jsp:include page ="header.jsp"/>
+            <form method="post" action="">
                 <select name="grouping">
                     <form method="post" action="">
                         <option value="光熱費">光熱費</option>

@@ -9,10 +9,10 @@
             <th><form method="post" action="goal">
                         <input type="submit" value="目標登録">
             </form></th>
-            <th><form method="post" action="revision">
+            <th><form method="post" action="revisionlist">
                         <input type="submit" value="修正">
             </form></th>
-            <th><form method="post" action="statstics">
+            <th><form method="post" action="statistics">
                         <input type="submit" value="統計">
             </form></th>
         </tr>
