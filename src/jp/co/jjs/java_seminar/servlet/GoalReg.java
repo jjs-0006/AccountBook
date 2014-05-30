@@ -52,14 +52,13 @@ public class GoalReg extends HttpServlet {
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("WEB-INF/jsp/goal.jsp");
         HttpSession session = request.getSession();
-        int year = 2;//(int)session.getAttribute("year");
-        int month = 3;//(int)session.getAttribute("month");
+        int year = (int)session.getAttribute("year");
+        int month = (int)session.getAttribute("month");
         int user_number = 1;
         ArrayList<Goal> goallist = new ArrayList<>();
         AccountDAO adao = new AccountDAO();
         goallist = adao.getGoal(year, month, user_number);
         request.setAttribute("goallist", goallist);
-
         dispatcher.forward(request, response);
 
     }

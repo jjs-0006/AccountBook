@@ -2,6 +2,7 @@ package jp.co.jjs.java_seminar.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,20 +57,32 @@ public class Home extends HttpServlet {
                 .getRequestDispatcher("WEB-INF/jsp/home.jsp");
         // 年月日・ユーザー番号はログイン時に初期化
         String[] message = { "セーフ", "アウト" };
-        int year = 2014;
-        int month = 5;
-        int day = 29;
+        HttpSession session = request.getSession();
+        int year = (int)session.getAttribute("year");
+        int month = (int)session.getAttribute("month");;
+        int day = Calendar.DAY_OF_MONTH;
         int user_number = 1;
         AccountDAO adao = new AccountDAO();
-        HttpSession session = request.getSession();
-  /*      String button = request.getParameter("");
+
+        String button = request.getParameter("");
         if (button.equals("登録")) {
             adao.setData(year, month, day, user_number,
                     Integer.parseInt(request.getParameter("type_number")),
                     Integer.parseInt(request.getParameter("money")), request.getParameter("note"));
-        }*/
+        }
         ArrayList<Data> datalist = adao.getData(year, month, user_number);
         ArrayList<Goal> goallist = adao.getGoal(year, month, user_number);
+        if(request.getParameter("goalentry") != null){
+            ArrayList<Integer> moneylist = new ArrayList<>();
+            for(int i = 1;i < 13;i++){
+                String s = request.getParameter("id" + i);
+                if(s.equals("")){
+                    s = "0";
+                }
+                moneylist.add(Integer.parseInt(s));
+            }
+            adao.setGoal(moneylist, year, month, user_number);
+        }
         session.setAttribute("data", datalist);
         request.setAttribute("goal", goallist);
         request.setAttribute("message", message);
@@ -77,9 +90,6 @@ public class Home extends HttpServlet {
         session.setAttribute("month", month);
         session.setAttribute("day", day);
         System.out.println(datalist.get(0).getMoney());
-
-
-        //グラフ用のデータを作成
 
 
         dispatcher.forward(request, response);
